@@ -18,7 +18,7 @@
     <!-- 
         Visualization & Content Choices: 
         - Professional Summary -> 'Sobre' Section: Goal is to inform and create a personal connection. A simple text block is most effective.
-        - Skills/Tools -> Radar Chart (Chart.js): Goal is to compare proficiency levels visually. A radar chart is more impactful and memorable than a list, providing a quick, holistic view of technical abilities. Interaction is via tooltips on hover.
+        - Skills/Tools -> Horizontal Bar Chart (Chart.js): Goal is to compare proficiency levels visually. A horizontal bar chart offers clear, direct comparison of skill levels, being very intuitive to read. Interaction is via tooltips on hover. Ordered from advanced to basic for immediate impact.
         - Experience -> Vertical Timeline (HTML/Tailwind): Goal is to show career progression. A timeline is an intuitive and universally understood format for chronological data, clearly separating roles and responsibilities.
         - Education/Courses -> Styled Cards (HTML/Tailwind): Goal is to inform clearly. Simple, structured cards are sufficient and maintain a clean layout.
         - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
@@ -32,11 +32,11 @@
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 600px;
+            max-width: 700px; /* Adjusted for better bar chart readability */
             margin-left: auto;
             margin-right: auto;
-            height: 300px;
-            max-height: 400px;
+            height: 350px; /* Adjusted for horizontal bars */
+            max-height: 450px;
         }
         @media (min-width: 768px) {
             .chart-container {
@@ -90,7 +90,7 @@
         <section id="habilidades" class="py-16 md:py-24 bg-white rounded-lg shadow-lg">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-[#6D7B8D]">Habilidades Técnicas</h2>
-                <p class="text-lg text-gray-600 mt-2">Um panorama visual das minhas competências em ferramentas de dados.</p>
+                <p class="text-lg text-gray-600 mt-2">Um panorama visual das minhas competências em ferramentas de dados, ordenadas por proficiência.</p>
             </div>
             <div class="chart-container">
                 <canvas id="skillsChart"></canvas>
@@ -181,57 +181,80 @@
         document.addEventListener('DOMContentLoaded', () => {
             const ctx = document.getElementById('skillsChart').getContext('2d');
             
-            const data = {
-                labels: [
-                    'Power BI', 
-                    'Looker Studio', 
-                    'Excel', 
-                    'Google Sheets', 
-                    'Python', 
-                    'SQL'
-                ],
-                datasets: [{
-                    label: 'Nível de Proficiência',
-                    data: [3, 4, 4, 4, 2, 2], // 1:Básico, 2:Básico-Intermediário, 3:Intermediário, 4:Avançado, 5:Especialista
-                    backgroundColor: 'rgba(109, 123, 141, 0.2)',
-                    borderColor: '#6D7B8D',
-                    pointBackgroundColor: '#6D7B8D',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: '#6D7B8D'
-                }]
+            // Pares de habilidades e níveis para facilitar a ordenação
+            const skills = [
+                { label: 'Looker Studio', level: 4 }, // Avançado
+                { label: 'Excel', level: 4 },        // Avançado
+                { label: 'Google Sheets', level: 4 },// Avançado
+                { label: 'Power BI', level: 3 },     // Intermediário
+                { label: 'Python', level: 2 },       // Básico
+                { label: 'SQL', level: 2 }           // Básico
+            ];
+
+            // Ordenar do nível mais alto para o mais baixo
+            skills.sort((a, b) => b.level - a.level);
+
+            const skillLabels = skills.map(s => s.label);
+            const skillData = skills.map(s => s.level);
+
+            const getSkillLevelText = (value) => {
+                const labels = ['Iniciante', 'Básico', 'Intermediário', 'Avançado', 'Especialista'];
+                return labels[value - 1] || 'N/A';
             };
 
             const config = {
-                type: 'radar',
-                data: data,
+                type: 'bar', // Changed to bar chart
+                data: {
+                    labels: skillLabels,
+                    datasets: [{
+                        label: 'Nível de Proficiência',
+                        data: skillData,
+                        backgroundColor: '#6D7B8D', // Main bar color
+                        borderColor: '#6D7B8D',
+                        borderWidth: 1
+                    }]
+                },
                 options: {
+                    indexAxis: 'y', // Makes it a horizontal bar chart
+                    responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        r: {
-                            angleLines: {
-                                color: 'rgba(74, 74, 74, 0.2)'
+                        x: {
+                            beginAtZero: true,
+                            max: 5,
+                            ticks: {
+                                stepSize: 1,
+                                callback: function(value) {
+                                    return getSkillLevelText(value);
+                                },
+                                color: '#4A4A4A',
+                                font: {
+                                    family: 'Inter, sans-serif'
+                                }
                             },
                             grid: {
-                                color: 'rgba(74, 74, 74, 0.2)'
+                                color: 'rgba(74, 74, 74, 0.1)'
                             },
-                            pointLabels: {
+                            title: {
+                                display: true,
+                                text: 'Nível de Proficiência',
+                                color: '#4A4A4A',
+                                font: {
+                                    size: 16,
+                                    family: 'Inter, sans-serif'
+                                }
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#4A4A4A',
                                 font: {
                                     size: 14,
                                     family: 'Inter, sans-serif'
-                                },
-                                color: '#4A4A4A'
-                            },
-                            ticks: {
-                                backdropColor: '#F8F7F4',
-                                color: '#4A4A4A',
-                                stepSize: 1,
-                                max: 5,
-                                min: 0,
-                                callback: function(value) {
-                                    const labels = ['Iniciante', 'Básico', 'Interm.', 'Avançado', 'Especialista'];
-                                    return labels[value];
                                 }
+                            },
+                            grid: {
+                                display: false // Hide horizontal grid lines
                             }
                         }
                     },
@@ -242,13 +265,12 @@
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    const levelMap = {1: 'Básico', 2: 'Básico', 3: 'Intermediário', 4: 'Avançado', 5: 'Especialista'};
                                     let label = context.dataset.label || '';
                                     if (label) {
                                         label += ': ';
                                     }
-                                    if (context.parsed.r !== null) {
-                                        label += levelMap[context.parsed.r] || 'N/A';
+                                    if (context.parsed.x !== null) {
+                                        label += getSkillLevelText(context.parsed.x);
                                     }
                                     return label;
                                 }
