@@ -8,30 +8,41 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <!-- 
-        Chosen Palette: Data Storage (Background: #1C2128, Text: #E0E6EB, Primary Accent: #00E676, Secondary Accent: #4DB6AC, Component Background: #2B323C) 
+        Chosen Palette: Glassmorphism Enhanced (Background: linear-gradient(to bottom right, #c6e6fa, #90c7f0), Text: #333333, Glass Card Background: rgba(255, 255, 255, 0.1), Glass Card Border: rgba(255, 255, 255, 0.3), Primary Accent: #007BFF, Secondary Accent: #00BFFF, Shadows: rgba(0, 0, 0, 0.2)) 
     -->
     <!-- 
-        Application Structure Plan: The SPA maintains its top-down narrative flow, optimized for a recruiter's exploration. The sticky navigation at the top provides quick jumps to 'Sobre', 'Habilidades', 'Experiência', 'Projetos', 'Formação', and 'Contato'. This structure allows for both linear progression and direct access to specific information. The "Data Storage" theme is integrated visually to enhance the professional image, with a dark, technical aesthetic. The interactive skills chart and the timeline structure are retained as they are highly effective for engaging users and presenting information clearly, now with a new visual language. New sections for 'Projetos' and 'Contato' are added to provide a more comprehensive and interactive professional profile.
+        Application Structure Plan: The SPA maintains its top-down narrative flow, optimized for a recruiter's exploration. The sticky navigation at the top provides quick jumps to 'Sobre', 'Habilidades', 'Experiência', 'Projetos', 'Formação', and 'Contato'. This structure allows for both linear progression and direct access to specific information. The "Glassmorphism" theme is deeply integrated, applying more pronounced translucent, blurred backgrounds to main content sections and cards, creating a modern, floating, and sophisticated aesthetic. The interactive skills chart and timeline are visually adapted to this theme, emphasizing clarity and elegance.
     -->
     <!-- 
         Visualization & Content Choices: 
-        - Professional Summary -> 'Sobre' Section: Goal is to inform and create a personal connection. A text block is used, now with a dark background and light text, aligned with the data storage theme for a high-tech feel.
-        - Skills/Tools -> Horizontal Bar Chart (Chart.js): Goal is to compare proficiency levels visually. The horizontal bar chart offers intuitive direct comparison. It's ordered from advanced to basic for immediate impact. The chart's colors (bars, labels, grid) are updated to reflect the new dark theme, using the vibrant green accent for data visualization.
-        - Experience -> Vertical Timeline (HTML/Tailwind): Goal is to show career progression. The timeline provides a clear chronological path. Its design is visually updated with darker cards, accented border lines, and glowing dots, emphasizing a data flow/circuitry aesthetic.
-        - Projects -> Placeholder Section (HTML/Tailwind): Goal is to anticipate future work and encourage practical application. A text block clearly indicates where future projects will be displayed, motivating the user to create them.
-        - Education/Courses -> Styled Cards (HTML/Tailwind): Goal is to inform clearly. Structured cards are used, now with darker backgrounds, subtle glow effects, and borders that align with the data storage theme.
-        - Contact Form -> Form (HTML/Tailwind + Formspree): Goal is to facilitate direct communication. A standard HTML form is implemented, configured to send data via Formspree, fitting the dark theme.
+        - Professional Summary -> 'Sobre' Section: Goal is to inform and make a modern connection. Text block within an enhanced glassmorphic container for a sleek presentation.
+        - Skills/Tools -> Horizontal Bar Chart (Chart.js): Goal is to compare proficiency levels visually. The chart is placed within a glassmorphic container, with its elements (bars, labels, grid) styled to complement the transparent aesthetic and accent colors, with improved blur.
+        - Experience -> Vertical Timeline (HTML/Tailwind): Goal is to show career progression. The timeline's elements are presented within enhanced glassmorphic cards, enhancing visual separation and modern appeal.
+        - Projects -> Placeholder Section (HTML/Tailwind): Goal is to anticipate future work. A text block within a glassmorphic container, featuring a clean, subtle dashed border.
+        - Education/Courses -> Styled Cards (HTML/Tailwind): Goal is to inform clearly. Structured cards are styled with the enhanced glassmorphism effect, showcasing clarity and modern design.
+        - Contact Form -> Form (HTML/Tailwind + Formspree): Goal is to facilitate communication. A standard HTML form, inputs and button styled to fit the glassmorphism theme, within a transparent container.
         - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
     -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #1C2128; /* Dark base background */
-            color: #E0E6EB; /* Light text for contrast */
+            background: linear-gradient(to bottom right, #c6e6fa, #90c7f0); /* More vibrant blue/cyan gradient background */
+            color: #333333; /* Dark grey text */
             line-height: 1.6;
+            min-height: 100vh; /* Ensure gradient covers full viewport */
         }
+
+        .glassmorphic-card {
+            background-color: rgba(255, 255, 255, 0.1); /* More transparent white */
+            backdrop-filter: blur(15px); /* Increased blur */
+            border: 1px solid rgba(255, 255, 255, 0.35); /* Slightly more prominent border */
+            border-radius: 1rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2); /* Darker, more noticeable shadow */
+            -webkit-backdrop-filter: blur(15px); /* For Safari compatibility */
+        }
+
         .chart-container {
             position: relative;
             width: 100%;
@@ -49,57 +60,90 @@
         .timeline-item::before {
             content: '';
             position: absolute;
-            width: 1rem;
-            height: 1rem;
+            width: 1.2rem;
+            height: 1.2rem;
             border-radius: 50%;
-            left: -2.3rem;
-            top: 0.8rem;
-            background-color: #00E676; /* Primary accent color (LED green) */
-            border: 4px solid #1C2128; /* Matches body background for "cut-out" effect */
-            box-shadow: 0 0 10px #00E676, 0 0 5px #00E676; /* Subtle glow */
+            left: -2.4rem;
+            top: 0.7rem;
+            background-color: #007BFF; /* Primary accent blue */
+            border: 4px solid #e0f2f7; /* Matches body background for "cut-out" effect */
+            box-shadow: 0 0 12px rgba(0, 123, 255, 0.5), 0 0 6px rgba(0, 123, 255, 0.3); /* Blue glow */
         }
         .timeline-line {
             position: absolute;
             left: 0.9rem;
-            width: 4px;
-            background-color: #4DB6AC; /* Secondary accent color (teal for subtle lines) */
+            width: 5px;
+            background-color: #00BFFF; /* Deep Sky Blue for the line */
             height: 100%;
-            box-shadow: 0 0 5px rgba(77, 182, 172, 0.5); /* Subtle glow for the line */
-        }
-        .card-bg {
-            background-color: #2B323C; /* Slightly lighter dark background for cards */
+            box-shadow: 0 0 8px rgba(0, 191, 255, 0.3); /* Subtle glow for the line */
         }
         .accent-text {
-            color: #00E676; /* Primary accent text */
+            color: #007BFF; /* Primary accent blue text */
         }
         .secondary-accent-text {
-            color: #4DB6AC; /* Secondary accent text */
-        }
-        .border-accent {
-            border-color: #00E676; /* Border color for primary accent */
+            color: #00BFFF; /* Secondary blue accent text */
         }
         .hover-accent:hover {
-            color: #00E676; /* Hover color for primary accent */
+            color: #007BFF; /* Hover color for primary accent */
         }
-        .shadow-accent {
-            box-shadow: 0 4px 15px rgba(0, 230, 118, 0.2); /* Soft shadow with accent color */
+        .button-primary {
+            background-color: #007BFF; /* Primary blue for buttons */
+            color: white;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .button-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
+        }
+        /* Specific styles for form inputs for glassmorphism */
+        .form-input-glass {
+            background-color: rgba(255, 255, 255, 0.1); /* Very light transparent background */
+            border: 1px solid rgba(255, 255, 255, 0.4); /* Translucent border */
+            color: #333333; /* Dark text for contrast */
+            backdrop-filter: blur(8px); /* More blur for inputs */
+            -webkit-backdrop-filter: blur(8px);
+            padding: 0.625rem 0.75rem;
+            border-radius: 0.375rem;
+        }
+        .form-input-glass:focus {
+            border-color: #007BFF; /* Primary accent on focus */
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.3); /* Subtle glow on focus */
+            background-color: rgba(255, 255, 255, 0.2); /* Slightly more opaque on focus */
+        }
+        .form-label-glass {
+            color: #333333; /* Dark label text */
+        }
+        .form-input-glass::placeholder {
+            color: rgba(51, 51, 51, 0.7); /* Lighter placeholder */
+        }
+        .peer:focus + .form-label-glass {
+            color: #007BFF; /* Accent color for floating label */
+        }
+        .projects-placeholder-border {
+            border: 2px dashed rgba(0, 123, 255, 0.5); /* Dashed border for projects */
+            background-color: rgba(255, 255, 255, 0.05); /* Very subtle background */
         }
     </style>
 </head>
 <body class="antialiased">
 
     <!-- Header & Navigation -->
-    <header id="home" class="p-4 md:p-6 sticky top-0 z-50 bg-[#1C2128]/90 backdrop-blur-md shadow-xl rounded-b-xl border-b border-[#00E676] transition-all duration-300 ease-in-out">
+    <header id="home" class="p-4 md:p-6 sticky top-0 z-50 glassmorphic-card rounded-b-xl border-b-2 border-opacity-50 border-[#007BFF] transition-all duration-300 ease-in-out">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl md:text-3xl font-extrabold accent-text tracking-tight">João Gonçalves Azevedo</h1>
+            <h1 class="text-2xl md:text-3xl font-extrabold accent-text tracking-wide">JOÃO GONÇALVES AZEVEDO</h1>
             <nav class="hidden md:flex space-x-8 text-lg font-medium items-center">
-                <a href="#sobre" class="text-gray-300 hover-accent transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#00E676] after:transition-all after:duration-300 hover:after:w-full">Sobre</a>
-                <a href="#habilidades" class="text-gray-300 hover-accent transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#00E676] after:transition-all after:duration-300 hover:after:w-full">Habilidades</a>
-                <a href="#experiencia" class="text-gray-300 hover-accent transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#00E676] after:transition-all after:duration-300 hover:after:w-full">Experiência</a>
-                <a href="#projetos" class="text-gray-300 hover-accent transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#00E676] after:transition-all after:duration-300 hover:after:w-full">Projetos</a>
-                <a href="#formacao" class="text-gray-300 hover-accent transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#00E676] after:transition-all after:duration-300 hover:after:w-full">Formação</a>
-                <a href="#contato" class="text-gray-300 hover-accent transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#00E676] after:transition-all after:duration-300 hover:after:w-full">Contato</a>
-                <a href="curriculo_joao_azevedo.pdf" target="_blank" class="ml-6 px-4 py-2 bg-[#00E676] text-[#1C2128] font-bold rounded-lg shadow-md hover:bg-[#4DB6AC] transition-colors duration-300 transform hover:scale-105">Baixar CV (PDF)</a>
+                <a href="#sobre" class="text-gray-700 hover-accent transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#007BFF] after:transition-all after:duration-300 hover:after:w-full">SOBRE</a>
+                <a href="#habilidades" class="text-gray-700 hover-accent transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#007BFF] after:transition-all after:duration-300 hover:after:w-full">HABILIDADES</a>
+                <a href="#experiencia" class="text-gray-700 hover-accent transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#007BFF] after:transition-all after:duration-300 hover:after:w-full">EXPERIÊNCIA</a>
+                <a href="#projetos" class="text-gray-700 hover-accent transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#007BFF] after:transition-all after:duration-300 hover:after:w-full">PROJETOS</a>
+                <a href="#formacao" class="text-gray-700 hover-accent transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#007BFF] after:transition-all after:duration-300 hover:after:w-full">FORMAÇÃO</a>
+                <a href="#contato" class="text-gray-700 hover-accent transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#007BFF] after:transition-all after:duration-300 hover:after:w-full">CONTATO</a>
+                <a href="curriculo_joao_azevedo.pdf" target="_blank" class="ml-6 px-4 py-2 button-primary">BAIXAR CV (PDF)</a>
             </nav>
             <div class="md:hidden">
                 <!-- Mobile menu icon -->
@@ -111,9 +155,9 @@
     <main class="container mx-auto p-6 md:p-10 max-w-6xl">
         
         <!-- Sobre Section -->
-        <section id="sobre" class="py-20 md:py-32 text-center card-bg rounded-xl shadow-lg mb-16 px-6 border border-[#2B323C] shadow-accent">
-            <h2 class="text-4xl md:text-5xl font-extrabold mb-6 accent-text leading-tight">Analista de Dados & Business Intelligence</h2>
-            <div class="max-w-3xl mx-auto text-lg md:text-xl text-gray-300 leading-relaxed">
+        <section id="sobre" class="py-20 md:py-32 text-center glassmorphic-card mb-16 px-6">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-6 accent-text leading-tight tracking-wider">ANALISTA DE DADOS & BUSINESS INTELLIGENCE</h2>
+            <div class="max-w-3xl mx-auto text-lg md:text-xl text-gray-700 leading-relaxed">
                 <p>
                     Profissional com experiência em <strong>análise de dados, criação de dashboards e automação de processos operacionais</strong>, focado na qualidade e eficiência. Minha capacidade de <strong>coleta, interpretação e análise de dados</strong> se traduz em <strong>insights acionáveis</strong> que apoiam a tomada de decisões estratégicas e otimizam processos em ambientes corporativos dinâmicos.
                 </p>
@@ -121,34 +165,34 @@
         </section>
 
         <!-- Habilidades Section -->
-        <section id="habilidades" class="py-16 md:py-24 card-bg rounded-xl shadow-lg mb-16 px-6 border border-[#2B323C] shadow-accent">
+        <section id="habilidades" class="py-16 md:py-24 glassmorphic-card mb-16 px-6">
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold accent-text">Habilidades Técnicas</h2>
-                <p class="text-lg text-gray-400 mt-2">Um panorama visual das minhas competências em ferramentas de dados, ordenadas por proficiência.</p>
+                <h2 class="text-3xl md:text-4xl font-bold accent-text">HABILIDADES TÉCNICAS</h2>
+                <p class="text-lg text-gray-700 mt-2">Um panorama visual das minhas competências em ferramentas de dados, ordenadas por proficiência.</p>
             </div>
-            <div class="chart-container bg-gray-900 p-6 rounded-lg shadow-inner border border-gray-700">
+            <div class="chart-container bg-white bg-opacity-30 rounded-lg shadow-inner border border-white border-opacity-40" style="backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
                 <canvas id="skillsChart"></canvas>
             </div>
-            <div class="text-center mt-8 text-gray-400 text-base md:text-lg">
-                <p>Tenho convivência com o universo <span class="font-semibold accent-text">AWS</span> e está no meu cronograma de estudos a obtenção de certificações na área, reforçando meu compromisso com o aprimoramento contínuo em tecnologias de nuvem.</p>
+            <div class="text-center mt-8 text-gray-700 text-base md:text-lg">
+                <p>Tenho convivência com o universo <span class="font-bold accent-text">AWS</span> e está no meu cronograma de estudos a obtenção de certificações na área, reforçando meu compromisso com o aprimoramento contínuo em tecnologias de nuvem.</p>
             </div>
         </section>
 
         <!-- Experiência Section -->
         <section id="experiencia" class="py-16 md:py-24 mb-16">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold accent-text">Experiência Profissional</h2>
-                <p class="text-lg text-gray-400 mt-2">Minha trajetória e contribuições em cada função.</p>
+                <h2 class="text-3xl md:text-4xl font-bold accent-text">EXPERIÊNCIA PROFISSIONAL</h2>
+                <p class="text-lg text-gray-700 mt-2">Minha trajetória e contribuições em cada função.</p>
             </div>
             <div class="relative max-w-2xl mx-auto pl-10 md:pl-12">
                 <div class="timeline-line"></div>
                 
                 <div class="mb-12 relative timeline-item">
-                    <div class="card-bg p-6 md:p-8 rounded-xl shadow-lg border-l-4 border-[#00E676] hover:shadow-xl transition-shadow duration-300 shadow-accent">
-                        <p class="text-sm font-semibold text-gray-400 mb-2">Janeiro/2023 – Atual</p>
+                    <div class="glassmorphic-card p-6 md:p-8 hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#007BFF]">
+                        <p class="text-sm font-semibold text-gray-600 mb-2">Janeiro/2023 – Atual</p>
                         <h3 class="text-2xl md:text-3xl font-bold mt-1 accent-text">Assistente de Qualidade Operacional</h3>
-                        <p class="text-lg font-medium text-gray-300 mb-4">ESTAPAR</p>
-                        <ul class="list-disc list-inside space-y-2 text-gray-300 text-base md:text-lg">
+                        <p class="text-lg font-medium text-gray-800 mb-4">ESTAPAR</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 text-base md:text-lg">
                             <li>Atuação na <strong>coleta e análise de dados operacionais</strong> para identificar tendências e pontos de melhoria na qualidade.</li>
                             <li>Desenvolvimento de <strong>dashboards interativos e relatórios automatizados</strong> em Power BI, Looker Studio e Excel, fornecendo <strong>métricas e indicadores</strong> para acompanhamento da performance.</li>
                             <li>Implementação de <strong>scripts em Python e Google Apps Script</strong> para automação de tarefas e <strong>redução de retrabalho</strong>.</li>
@@ -159,11 +203,11 @@
                 </div>
 
                 <div class="mb-12 relative timeline-item">
-                    <div class="card-bg p-6 md:p-8 rounded-xl shadow-lg border-l-4 border-[#4DB6AC] hover:shadow-xl transition-shadow duration-300">
-                        <p class="text-sm font-semibold text-gray-400 mb-2">Outubro/2021 – Dezembro/2022</p>
+                    <div class="glassmorphic-card p-6 md:p-8 hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#00BFFF]">
+                        <p class="text-sm font-semibold text-gray-600 mb-2">Outubro/2021 – Dezembro/2022</p>
                         <h3 class="text-2xl md:text-3xl font-bold mt-1 accent-text">Jovem Aprendiz</h3>
-                        <p class="text-lg font-medium text-gray-300 mb-4">ESTAPAR</p>
-                        <ul class="list-disc list-inside space-y-2 text-gray-300 text-base md:text-lg">
+                        <p class="text-lg font-medium text-gray-800 mb-4">ESTAPAR</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 text-base md:text-lg">
                             <li><strong>Consolidação e organização de dados operacionais</strong>, com foco na atualização de planilhas e <strong>extração de indicadores</strong> de controle.</li>
                             <li>Participação na elaboração de <strong>relatórios de controle de qualidade</strong> e em treinamentos internos sobre processos.</li>
                             <li>Iniciação em <strong>ferramentas de Business Intelligence</strong>, obtendo os primeiros contatos com <strong>modelagem e visualização de dados</strong>.</li>
@@ -175,67 +219,67 @@
         </section>
 
         <!-- Projetos Section -->
-        <section id="projetos" class="py-16 md:py-24 card-bg rounded-xl shadow-lg mb-16 px-6 border border-[#2B323C] shadow-accent">
+        <section id="projetos" class="py-16 md:py-24 glassmorphic-card mb-16 px-6">
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold accent-text">Meus Projetos</h2>
-                <p class="text-lg text-gray-400 mt-2">Nesta seção, você encontrará exemplos práticos do meu trabalho e minha capacidade de resolver problemas através da análise de dados.</p>
+                <h2 class="text-3xl md:text-4xl font-bold accent-text">MEUS PROJETOS</h2>
+                <p class="text-lg text-gray-700 mt-2">Nesta seção, você encontrará exemplos práticos do meu trabalho e minha capacidade de resolver problemas através da análise de dados.</p>
             </div>
-            <div class="max-w-3xl mx-auto text-center py-10 border border-dashed border-gray-700 rounded-lg text-gray-500">
-                <p class="text-xl md:text-2xl mb-4">✨ Em breve: Meus projetos de Análise de Dados e BI serão adicionados aqui! ✨</p>
-                <p class="text-lg">Estou sempre buscando novas oportunidades para aplicar minhas habilidades. Se você tiver um desafio interessante, vamos conversar!</p>
+            <div class="max-w-3xl mx-auto text-center py-10 projects-placeholder-border rounded-lg text-gray-600">
+                <p class="text-xl md:text-2xl mb-4 text-[#007BFF] font-extrabold">✨ EM BREVE: MEUS PROJETOS DE ANÁLISE DE DADOS E BI SERÃO ADICIONADOS AQUI! ✨</p>
+                <p class="text-lg text-gray-700">Estou sempre buscando novas oportunidades para aplicar minhas habilidades. Se você tiver um desafio interessante, vamos conversar!</p>
             </div>
             <!-- Futuros projetos podem ser adicionados aqui, cada um com sua descrição, tecnologias e links. -->
         </section>
 
         <!-- Formação Section -->
-        <section id="formacao" class="py-16 md:py-24 card-bg rounded-xl shadow-lg mb-24 px-6 border border-[#2B323C] shadow-accent">
+        <section id="formacao" class="py-16 md:py-24 glassmorphic-card mb-24 px-6">
              <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold accent-text">Formação & Cursos</h2>
-                <p class="text-lg text-gray-400 mt-2">Minha base acadêmica e aprendizado contínuo.</p>
+                <h2 class="text-3xl md:text-4xl font-bold accent-text">FORMAÇÃO & CURSOS</h2>
+                <p class="text-lg text-gray-700 mt-2">Minha base acadêmica e aprendizado contínuo.</p>
             </div>
             <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div class="glassmorphic-card p-6 hover:shadow-lg transition-shadow duration-300">
                     <h3 class="text-xl md:text-2xl font-bold accent-text">Ciência da Computação</h3>
-                    <p class="text-lg font-medium text-gray-300">UNICID</p>
-                    <p class="text-gray-400">2021 - 2025 (previsão de conclusão)</p>
+                    <p class="text-lg font-medium text-gray-800">UNICID</p>
+                    <p class="text-gray-700">2021 - 2025 (previsão de conclusão)</p>
                 </div>
-                 <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-md hover:shadow-lg transition-shadow duration-300">
+                 <div class="glassmorphic-card p-6 hover:shadow-lg transition-shadow duration-300">
                     <h3 class="text-xl md:text-2xl font-bold accent-text">SQL para Análise de Dados</h3>
-                    <p class="text-lg font-medium text-gray-300">Udemy</p>
-                    <p class="text-gray-400">Curso extracurricular focado em consultas e manipulação de dados.</p>
+                    <p class="text-lg font-medium text-gray-800">Udemy</p>
+                    <p class="text-gray-700">Curso extracurricular focado em consultas e manipulação de dados.</p>
                 </div>
             </div>
         </section>
 
         <!-- Contato Section -->
-        <section id="contato" class="py-16 md:py-24 card-bg rounded-xl shadow-lg px-6 border border-[#2B323C] shadow-accent">
+        <section id="contato" class="py-16 md:py-24 glassmorphic-card px-6">
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold accent-text">Entre em Contato</h2>
-                <p class="text-lg text-gray-400 mt-2">Gostaria de discutir uma oportunidade ou apenas bater um papo? Envie uma mensagem!</p>
+                <h2 class="text-3xl md:text-4xl font-bold accent-text">ENTRE EM CONTATO</h2>
+                <p class="text-lg text-gray-700 mt-2">Gostaria de discutir uma oportunidade ou apenas bater um papo? Envie uma mensagem!</p>
             </div>
             <form action="https://formspree.io/f/xrbkpavr" method="POST" class="max-w-md mx-auto space-y-6">
                 <div class="relative z-0 w-full mb-6 group">
-                    <input type="text" name="name" id="name" class="block py-2.5 px-0 w-full text-lg text-gray-200 bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#00E676] peer" placeholder=" " required />
-                    <label for="name" class="peer-focus:font-medium absolute text-lg text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-[#00E676] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Seu Nome</label>
+                    <input type="text" name="name" id="name" class="block py-2.5 px-0 w-full text-lg text-gray-800 bg-transparent border-0 border-b-2 border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-[#007BFF] peer" placeholder=" " required />
+                    <label for="name" class="peer-focus:font-medium absolute text-lg text-gray-600 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-[#007BFF] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Seu Nome</label>
                 </div>
                 <div class="relative z-0 w-full mb-6 group">
-                    <input type="email" name="email" id="email" class="block py-2.5 px-0 w-full text-lg text-gray-200 bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#00E676] peer" placeholder=" " required />
-                    <label for="email" class="peer-focus:font-medium absolute text-lg text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-[#00E676] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Seu E-mail</label>
+                    <input type="email" name="email" id="email" class="block py-2.5 px-0 w-full text-lg text-gray-800 bg-transparent border-0 border-b-2 border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-[#007BFF] peer" placeholder=" " required />
+                    <label for="email" class="peer-focus:font-medium absolute text-lg text-gray-600 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-[#007BFF] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Seu E-mail</label>
                 </div>
                 <div class="relative z-0 w-full mb-6 group">
-                    <textarea name="message" id="message" rows="4" class="block py-2.5 px-0 w-full text-lg text-gray-200 bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-[#00E676] peer" placeholder=" " required></textarea>
-                    <label for="message" class="peer-focus:font-medium absolute text-lg text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-[#00E676] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sua Mensagem</label>
+                    <textarea name="message" id="message" rows="4" class="block py-2.5 px-0 w-full text-lg text-gray-800 bg-transparent border-0 border-b-2 border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-[#007BFF] peer" placeholder=" " required></textarea>
+                    <label for="message" class="peer-focus:font-medium absolute text-lg text-gray-600 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-[#007BFF] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Sua Mensagem</label>
                 </div>
-                <button type="submit" class="w-full px-6 py-3 bg-[#00E676] text-[#1C2128] font-bold rounded-lg shadow-md hover:bg-[#4DB6AC] transition-colors duration-300 transform hover:scale-105">Enviar Mensagem</button>
+                <button type="submit" class="w-full px-6 py-3 button-primary">ENVIAR MENSAGEM</button>
             </form>
         </section>
 
     </main>
 
     <!-- Footer -->
-    <footer class="bg-[#101317] text-white py-12 rounded-t-xl border-t border-[#00E676]">
+    <footer class="bg-[#081223] text-white py-12 rounded-t-xl border-t-2 border-[#007BFF]">
         <div class="container mx-auto text-center">
-            <h3 class="text-2xl md:text-3xl font-bold mb-4 accent-text">Vamos nos conectar?</h3>
+            <h3 class="text-2xl md:text-3xl font-bold mb-4 accent-text">VAMOS NOS CONECTAR?</h3>
             <p class="text-lg mb-8 max-w-xl mx-auto opacity-90 text-gray-400">Estou aberto a novas oportunidades e colaborações. Sinta-se à vontade para entrar em contato.</p>
             <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8 text-lg">
                 <a href="mailto:azevedojoaogoncalves@gmail.com" class="hover-accent transition-colors text-gray-300">
@@ -247,7 +291,7 @@
                 <a href="tel:+5511974200034" class="hover-accent transition-colors text-gray-300">
                     <span class="inline-block align-middle mr-2">📱</span> (11) 97420-0034
                 </a>
-                <a href="curriculo_joao_azevedo.pdf" target="_blank" class="md:ml-6 px-4 py-2 bg-[#00E676] text-[#1C2128] font-bold rounded-lg shadow-md hover:bg-[#4DB6AC] transition-colors duration-300 transform hover:scale-105">Baixar CV (PDF)</a>
+                <a href="curriculo_joao_azevedo.pdf" target="_blank" class="md:ml-6 px-4 py-2 button-primary">BAIXAR CV (PDF)</a>
             </div>
             <p class="mt-10 text-sm text-gray-600">&copy; 2025 João Gonçalves Azevedo. Todos os direitos reservados.</p>
         </div>
@@ -283,8 +327,8 @@
                     datasets: [{
                         label: 'Nível de Proficiência',
                         data: skillData,
-                        backgroundColor: '#00E676', /* Primary accent color for bars */
-                        borderColor: '#4DB6AC', /* Secondary accent color for bar borders */
+                        backgroundColor: '#007BFF', /* Primary accent blue for bars */
+                        borderColor: '#0056b3', /* Darker blue for bar borders */
                         borderWidth: 1,
                         borderRadius: 6,
                     }]
@@ -302,20 +346,20 @@
                                 callback: function(value) {
                                     return getSkillLevelText(value);
                                 },
-                                color: '#E0E6EB',
+                                color: '#333333', /* Dark text for x-axis ticks */
                                 font: {
                                     family: 'Inter, sans-serif',
                                     size: 13,
                                 }
                             },
                             grid: {
-                                color: 'rgba(77, 182, 172, 0.2)',
+                                color: 'rgba(0, 123, 255, 0.15)', /* Transparent blue grid lines */
                                 drawBorder: false,
                             },
                             title: {
                                 display: true,
                                 text: 'Nível de Proficiência',
-                                color: '#E0E6EB',
+                                color: '#333333', /* Dark text for x-axis title */
                                 font: {
                                     family: 'Inter, sans-serif',
                                     size: 16,
@@ -325,7 +369,7 @@
                         },
                         y: {
                             ticks: {
-                                color: '#E0E6EB',
+                                color: '#333333', /* Dark text for y-axis ticks */
                                 font: {
                                     size: 14,
                                     family: 'Inter, sans-serif',
@@ -343,7 +387,7 @@
                             display: false
                         },
                         tooltip: {
-                            backgroundColor: 'rgba(43, 50, 60, 0.9)',
+                            backgroundColor: 'rgba(0, 123, 255, 0.9)', /* Blue tooltip background */
                             titleFont: {
                                 size: 16,
                                 family: 'Inter, sans-serif',
