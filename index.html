@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>João Gonçalves Azevedo - Analista de Dados & BI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- 
+        Chosen Palette: Warm Neutrals (Background: #F8F7F4, Text: #4A4A4A, Primary: #6D7B8D, Accent: #A0AEC0) 
+    -->
+    <!-- 
+        Application Structure Plan: The SPA is designed as a personal portfolio with a top-down narrative flow, ideal for a recruiter's journey. It starts with a strong header, followed by a sticky navigation for quick access to key sections: 'Sobre' (a personal summary), 'Habilidades' (an interactive visualization), 'Experiência' (a clear timeline), and 'Formação'. This structure prioritizes usability by allowing both linear scrolling and direct navigation. The interactive skills chart and timeline format were chosen to make the content more engaging and digestible than a standard text resume, transforming it from a static document into a dynamic showcase.
+    -->
+    <!-- 
+        Visualization & Content Choices: 
+        - Professional Summary -> 'Sobre' Section: Goal is to inform and create a personal connection. A simple text block is most effective.
+        - Skills/Tools -> Radar Chart (Chart.js): Goal is to compare proficiency levels visually. A radar chart is more impactful and memorable than a list, providing a quick, holistic view of technical abilities. Interaction is via tooltips on hover.
+        - Experience -> Vertical Timeline (HTML/Tailwind): Goal is to show career progression. A timeline is an intuitive and universally understood format for chronological data, clearly separating roles and responsibilities.
+        - Education/Courses -> Styled Cards (HTML/Tailwind): Goal is to inform clearly. Simple, structured cards are sufficient and maintain a clean layout.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #4A4A4A;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            left: -2.3rem;
+            top: 0.2rem;
+            background-color: #6D7B8D;
+            border: 3px solid #F8F7F4;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header id="home" class="p-4 md:p-6 sticky top-0 z-50 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-[#6D7B8D]">João Gonçalves Azevedo</h1>
+            <nav class="hidden md:flex space-x-6 text-lg">
+                <a href="#sobre" class="hover:text-[#6D7B8D] transition-colors">Sobre</a>
+                <a href="#habilidades" class="hover:text-[#6D7B8D] transition-colors">Habilidades</a>
+                <a href="#experiencia" class="hover:text-[#6D7B8D] transition-colors">Experiência</a>
+                <a href="#formacao" class="hover:text-[#6D7B8D] transition-colors">Formação</a>
+            </nav>
+            <div class="md:hidden">
+                <!-- Mobile menu can be added here if needed -->
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-6 md:p-10">
+        
+        <!-- Sobre Section -->
+        <section id="sobre" class="py-16 md:py-24 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-[#6D7B8D]">Analista de Dados & Business Intelligence</h2>
+            <div class="max-w-3xl mx-auto text-lg md:text-xl text-gray-700 leading-relaxed">
+                <p>
+                    Profissional com experiência em análise de dados, criação de dashboards e automação de processos operacionais, focado na qualidade e eficiência. Tenho comprovada capacidade de coleta, interpretação e análise de dados para gerar insights acionáveis. Busco aplicar e aprimorar minhas habilidades para apoiar a tomada de decisões estratégicas e otimizar processos em ambientes corporativos dinâmicos.
+                </p>
+            </div>
+        </section>
+
+        <!-- Habilidades Section -->
+        <section id="habilidades" class="py-16 md:py-24 bg-white rounded-lg shadow-lg">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#6D7B8D]">Habilidades Técnicas</h2>
+                <p class="text-lg text-gray-600 mt-2">Um panorama visual das minhas competências em ferramentas de dados.</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="skillsChart"></canvas>
+            </div>
+            <div class="text-center mt-8 text-gray-600">
+                <p>Tenho convivência com o universo <span class="font-semibold text-[#6D7B8D]">AWS</span> e está no meu cronograma de estudos a obtenção de certificações na área.</p>
+            </div>
+        </section>
+
+        <!-- Experiência Section -->
+        <section id="experiencia" class="py-16 md:py-24">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#6D7B8D]">Experiência Profissional</h2>
+                <p class="text-lg text-gray-600 mt-2">Minha trajetória e contribuições em cada função.</p>
+            </div>
+            <div class="relative max-w-2xl mx-auto pl-8">
+                <div class="absolute left-3 h-full border-l-2 border-gray-300"></div>
+                
+                <div class="mb-12 timeline-item">
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#6D7B8D]">
+                        <p class="text-sm font-semibold text-gray-500">Janeiro/2023 – Atual</p>
+                        <h3 class="text-2xl font-bold mt-1">Assistente de Qualidade Operacional</h3>
+                        <p class="text-lg font-medium text-gray-700 mb-4">ESTAPAR</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>Atuação na coleta e análise de dados operacionais para identificar tendências e pontos de melhoria.</li>
+                            <li>Desenvolvimento de dashboards interativos e relatórios em Power BI, Looker Studio e Excel.</li>
+                            <li>Implementação de scripts em Python e Google Apps Script para automação e redução de retrabalho.</li>
+                            <li>Apoio em auditorias, definição de KPIs e revisão de processos para otimização contínua.</li>
+                            <li>Colaboração com equipes de negócio para levantamento de requisitos e soluções analíticas.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mb-12 timeline-item">
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#A0AEC0]">
+                        <p class="text-sm font-semibold text-gray-500">Outubro/2021 – Dezembro/2022</p>
+                        <h3 class="text-2xl font-bold mt-1">Jovem Aprendiz</h3>
+                        <p class="text-lg font-medium text-gray-700 mb-4">ESTAPAR</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>Consolidação de dados operacionais, atualização de planilhas e extração de indicadores.</li>
+                            <li>Participação em relatórios de controle de qualidade e treinamentos internos.</li>
+                            <li>Iniciação em ferramentas de BI, com primeiros contatos em modelagem e visualização de dados.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Formação Section -->
+        <section id="formacao" class="py-16 md:py-24 bg-white rounded-lg shadow-lg">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#6D7B8D]">Formação & Cursos</h2>
+                <p class="text-lg text-gray-600 mt-2">Minha base acadêmica e aprendizado contínuo.</p>
+            </div>
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <h3 class="text-xl font-bold text-[#6D7B8D]">Ciência da Computação</h3>
+                    <p class="text-lg font-medium text-gray-700">UNICID</p>
+                    <p class="text-gray-600">2021 - 2025 (previsão de conclusão)</p>
+                </div>
+                 <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <h3 class="text-xl font-bold text-[#6D7B8D]">SQL para Análise de Dados</h3>
+                    <p class="text-lg font-medium text-gray-700">Udemy</p>
+                    <p class="text-gray-600">Curso extracurricular focado em consultas e manipulação de dados.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#4A4A4A] text-white py-10">
+        <div class="container mx-auto text-center">
+            <h3 class="text-2xl font-bold mb-4">Vamos nos conectar?</h3>
+            <p class="text-lg mb-6">Estou aberto a novas oportunidades e colaborações.</p>
+            <div class="flex justify-center items-center space-x-6">
+                <a href="mailto:azevedojoaogoncalves@gmail.com" class="hover:text-[#A0AEC0] transition-colors text-lg">azevedojoaogoncalves@gmail.com</a>
+                <span class="text-gray-500">|</span>
+                <a href="https://www.linkedin.com/in/joaogoncalvesazevedo" target="_blank" rel="noopener noreferrer" class="hover:text-[#A0AEC0] transition-colors text-lg">LinkedIn</a>
+                <span class="text-gray-500">|</span>
+                <a href="tel:+5511974200034" class="hover:text-[#A0AEC0] transition-colors text-lg">(11) 97420-0034</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('skillsChart').getContext('2d');
+            
+            const data = {
+                labels: [
+                    'Power BI', 
+                    'Looker Studio', 
+                    'Excel', 
+                    'Google Sheets', 
+                    'Python', 
+                    'SQL'
+                ],
+                datasets: [{
+                    label: 'Nível de Proficiência',
+                    data: [3, 4, 4, 4, 2, 2], // 1:Básico, 2:Básico-Intermediário, 3:Intermediário, 4:Avançado, 5:Especialista
+                    backgroundColor: 'rgba(109, 123, 141, 0.2)',
+                    borderColor: '#6D7B8D',
+                    pointBackgroundColor: '#6D7B8D',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#6D7B8D'
+                }]
+            };
+
+            const config = {
+                type: 'radar',
+                data: data,
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(74, 74, 74, 0.2)'
+                            },
+                            grid: {
+                                color: 'rgba(74, 74, 74, 0.2)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 14,
+                                    family: 'Inter, sans-serif'
+                                },
+                                color: '#4A4A4A'
+                            },
+                            ticks: {
+                                backdropColor: '#F8F7F4',
+                                color: '#4A4A4A',
+                                stepSize: 1,
+                                max: 5,
+                                min: 0,
+                                callback: function(value) {
+                                    const labels = ['Iniciante', 'Básico', 'Interm.', 'Avançado', 'Especialista'];
+                                    return labels[value];
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const levelMap = {1: 'Básico', 2: 'Básico', 3: 'Intermediário', 4: 'Avançado', 5: 'Especialista'};
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.r !== null) {
+                                        label += levelMap[context.parsed.r] || 'N/A';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            new Chart(ctx, config);
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
